@@ -38,7 +38,7 @@ class steamcmd (
       package { 'lib32gcc1': ensure => present, }
     }
     'redhat','centos','fedora','Scientific': {
-      package { ['glibc.i686', 'libstdc++.i686']: ensure	=>	present, }
+      package { ['glibc.i686', 'libstdc++.i686']: ensure  =>  present, }
     }
   }
 
