@@ -2,11 +2,10 @@ class steamcmd (
   $user					=	'steam',
   $group				=	'steam',
   $home					=	'/usr/local/steam',
-  $app_id				=	'',
-  $steam_user			=	'',
+  $app_id				=	'237410',
+  $steam_user			=	'anonymous',
   $steam_pass			=	'',
-  $app_name				=	'',
-  $force_install_dir	=	'',
+  $app_name				=	'insurgency',
 )
 
 class { 'staging':
@@ -51,7 +50,7 @@ case #operatingsystem {
   }
 }
 
-exec { "${home}/steamcmd.sh +login ${steam_user} ${steam_pass} +force_install_dir ${home}/${force_install_dir} +app_update ${app_id} +quit":
+exec { "${home}/steamcmd.sh +login ${steam_user} ${steam_pass} +force_install_dir ${home}/${app_name} +app_update ${app_id} +quit":
   cwd	=>	"${home}",
-  creates	=>	"${home}/${force_install_dir}"
+  creates	=>	"${home}/${app_name}"
 }
