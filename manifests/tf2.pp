@@ -10,24 +10,25 @@ class steamcmd::tf2 (
     creates =>  "${steamcmd::home}/${app_name}",
     user    =>  'steam',
     require =>  staging::deploy['steamcmd_linux.tar.gz'],
-  }
-
+  } ->
+  file { 'server.cfg':
+    path    => '/usr/local/steam/tf2/tf/cfg/server.cfg',
+    ensure  => file,
+    content => template("steamcmd/tf2.server.cfg.el7.erb"),
+  } ->
   file { 'tf2.sh':
     path    => '/usr/local/steam/tf2.sh',
     ensure  => file,
-    require => staging::deploy['steamcmd_linux.tar.gz'],
     content => template("steamcmd/tf2.sh.el7.erb"),
   } ->
   file { 'tf2server.service':
     path    => '/etc/systemd/system/tf2server.service',
     ensure  => file,
-    require => staging::deploy['steamcmd_linux.tar.gz'],
     content => template("steamcmd/tf2server.service.el7.erb"),
   } ->
   file { 'tf2server.timer':
     path    => '/etc/systemd/system/tf2server.timer',
     ensure  => file,
-    require => staging::deploy['steamcmd_linux.tar.gz'],
     content => template("steamcmd/tf2server.timer.el7.erb"),
   } ->
   service { "tf2server.timer":
