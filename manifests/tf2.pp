@@ -30,8 +30,9 @@ class steamcmd::tf2 (
     require => staging::deploy['steamcmd_linux.tar.gz'],
     content => template("steamcmd/tf2server.timer.el7.erb"),
   } ->
-  service { "tf2server":
+  service { "tf2server.timer":
     enable => true,
+    ensure => running,
   }
 
 
