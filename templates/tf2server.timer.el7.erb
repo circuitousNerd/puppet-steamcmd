@@ -1,0 +1,11 @@
+[Unit]
+Description=Team Fortress 2 server
+RefuseManualStart=no
+RefuseManualStop=no
+
+[Timer]
+OnBootSec=15
+Unit=tf2server.service
+
+[Install]
+WantedBy=timers.target
