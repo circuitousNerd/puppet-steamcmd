@@ -2,10 +2,8 @@ class steamcmd (
   $user       = 'steam',
   $group      = 'steam',
   $home       = '/usr/local/steam',
-  $app_id     = '237410',
   $steam_user = 'anonymous',
   $steam_pass = '',
-  $app_name   = 'insurgency',
 ){
 
   staging::deploy { 'steamcmd_linux.tar.gz':
@@ -38,14 +36,9 @@ class steamcmd (
       package { 'lib32gcc1': ensure => present, }
     }
     'redhat','centos','fedora','Scientific': {
-      package { ['glibc.i686', 'libstdc++.i686']: ensure  =>  present, }
+      package { ['glibc.i686', 'libstdc++.i686', 'ncurses-libs']:
+        ensure  =>  present,
+      }
     }
-  }
-
-  exec { "${home}/steamcmd.sh +login ${steam_user} ${steam_pass} +force_install_dir ${home}/${app_name} +app_update ${app_id} +quit":
-    cwd     =>  "${home}",
-    creates =>  "${home}/${app_name}",
-    user    =>  'steam',
-    require =>  staging::deploy['steamcmd_linux.tar.gz'],
   }
 }
